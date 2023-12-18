@@ -16,7 +16,7 @@ namespace Core.Test
     {
         [Test]
         [AutoData]
-        public void Test(IFixture fixture)
+        public void BasicFixtureTest(IFixture fixture)
         {
             var sample = fixture.Build<Sample1>()
                 .With(x => x.Description, "Custom")
@@ -27,7 +27,7 @@ namespace Core.Test
 
         [Test]
         [AutoData]
-        public void Test(Sample1 injectedSample)
+        public void AutogDataAttribute(Sample1 injectedSample)
         {
             Assert.True(injectedSample.Items.Count() > 0);
         }
@@ -53,6 +53,8 @@ namespace Core.Test
             CollectionAssert.IsNotEmpty(arraySamples);
         }
 
+        //[Test] be sure not to add these to the header as well.
+        //[TestCase] these will trigger additional tests
         [InlineAutoData("test")]
         public void InlineData(string thing, Sample1 sample)
         {
