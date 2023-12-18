@@ -34,14 +34,30 @@ namespace Core.Test
 
         /// <summary>
         /// Throws AutoFixture.ObjectCreationExceptionWithPath
+        /// This throws an exception because it doesn't know how to navigate circular dependencies. Tests will fail
         /// </summary>
         /// <param name="brokenSample"></param>
         [Test]
         [AutoData]
         public void CircularDependencies_Break(Sample2 brokenSample) 
         {
-            // This throws an exception because it doesn't know how to navigate circular dependencies. Tests will fail
             Assert.Fail();
+        }
+
+        [Test]
+        [AutoData]
+        public void AdditionalSupportedTypes(IEnumerable<Sample1> samples, List<Sample1> listSamples, Sample1[] arraySamples) 
+        {
+            CollectionAssert.IsNotEmpty(samples);
+            CollectionAssert.IsNotEmpty(listSamples);
+            CollectionAssert.IsNotEmpty(arraySamples);
+        }
+
+        [InlineAutoData("test")]
+        public void InlineData(string thing, Sample1 sample)
+        {
+            Assert.IsNotNull(sample);
+            Assert.That(thing, Is.EqualTo("test"));
         }
     }
 }

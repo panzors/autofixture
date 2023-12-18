@@ -59,7 +59,16 @@ namespace Core.Test.Fixtures
 
             fixture.Register(() => 
             {
-                return fixture.Build<Sample2>().Without(x => x.Items).Create();
+                return fixture.Build<Sample2>()
+                    .Without(x => x.Items)
+                    .Create();
+            });
+
+            fixture.Register(() =>
+            {
+                return fixture.Build<Sample3>()
+                    .With(x => x.DescriptionTypes, Sample3.DescriptionType.Complex.ToString())
+                    .Create();
             });
         }
     }
